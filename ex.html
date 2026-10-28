@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawPedia - Dog Breed Guide & Pet Care</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Google Fonts (Inter & Khmer Kantumruy Pro) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Kantumruy+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #f59e0b;
+            --primary-hover: #d97706;
+            --primary-light: #fef3c7;
+            --primary-text: #92400e;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --bs-body-font-family: 'Inter', 'Kantumruy Pro', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            font-family: var(--bs-body-font-family);
+            padding-top: 76px; /* Offset for fixed navbar */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background-color: var(--primary);
+            color: #ffffff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(180deg, var(--primary-light) 0%, rgba(254, 243, 199, 0) 100%);
+            padding: 4rem 0 3rem;
+        }
+
+        /* Cards & Hover Effects */
+        .custom-card {
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            transition: all 0.25s ease-in-out;
+            background-color: var(--bg-card);
+            overflow: hidden;
+        }
+
+        .custom-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .card-img-wrapper {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background-color: #e2e8f0;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Carousel Slideshow Styling */
+        .carousel-item img {
+            height: 420px;
+            object-fit: cover;
+            border-radius: 1rem;
+        }
+
+        .carousel-caption {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        /* Buttons & Badges */
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: #ffffff;
+            font-weight: 700;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--primary-hover);
+            color: #ffffff;
+        }
+
+        .badge-custom {
+            background-color: var(--primary-light);
+            color: var(--primary-text);
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 50px;
+        }
+
+        /* Modal styling */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+        }
+
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4" href="#home" onclick="showSection('home')">
+                <div class="logo-icon"><i class="fa-solid fa-dog"></i></div>
+                Paw<span class="text-warning">Pedia</span>
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto gap-2">
+                    <li class="nav-item"><a class="nav-link fw-semibold active" href="#home" onclick="showSection('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#breeds" onclick="showSection('breeds')">Dog Breeds</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#about" onclick="showSection('about')">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link fw-semibold" href="#contact" onclick="showSection('contact')">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main>
+
+        <!-- PAGE 1: HOME PAGE -->
+        <section id="page-home" class="py-4">
+            <div class="hero rounded-4 mb-5">
+                <div class="container py-4">
+                    <div class="row align-items-center gy-4">
+                        <div class="col-lg-6">
+                            <span class="badge badge-custom mb-3">Simple & Clean Dog Encyclopedia</span>
+                            <h1 class="display-5 fw-bold mb-3">Discover the Perfect <span class="text-warning">Dog Companion</span></h1>
+                            <p class="text-muted mb-4">Explore reliable details, temperaments, stats, and care tips for top dog breeds worldwide.</p>
+                            <button onclick="showSection('breeds')" class="btn btn-primary-custom">
+                                <span>Explore Dog Breeds</span> <i class="fa-solid fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                        <div class="col-lg-6">
+                            <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80" alt="Happy Dog" class="img-fluid rounded-4 shadow-lg border border-4 border-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Breeds Highlights -->
+            <div class="container py-3">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold">Featured Breeds</h2>
+                    <p class="text-muted">Quick preview of popular companions loved around the world.</p>
+                </div>
+                <div class="row g-4" id="featuredGrid">
+                    <!-- Populated via Javascript -->
+                </div>
+            </div>
+
+            <!-- Essential Dog Care -->
+            <div class="container py-4">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold">Essential Dog Care</h2>
+                    <p class="text-muted">Basic tips to keep your canine companion healthy and happy.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="p-4 bg-white rounded-4 border h-100">
+                            <div class="fs-1 text-warning mb-3"><i class="fa-solid fa-bowl-food"></i></div>
+                            <h4 class="fw-bold fs-5">Nutrition & Diet</h4>
+                            <p class="text-muted small mb-0">Provide balanced, age-appropriate food and maintain constant access to fresh drinking water.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4 bg-white rounded-4 border h-100">
+                            <div class="fs-1 text-warning mb-3"><i class="fa-solid fa-person-walking-with-dog"></i></div>
+                            <h4 class="fw-bold fs-5">Daily Exercise</h4>
+                            <p class="text-muted small mb-0">Engage in regular daily walks and playtime tailored to your breed's energy level to ensure fitness.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4 bg-white rounded-4 border h-100">
+                            <div class="fs-1 text-warning mb-3"><i class="fa-solid fa-soap"></i></div>
+                            <h4 class="fw-bold fs-5">Grooming Care</h4>
+                            <p class="text-muted small mb-0">Maintain coat health with routine brushing, nail trimming, and dental hygiene checks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: DOG BREEDS DIRECTORY -->
+        <section id="page-breeds" class="py-5" style="display: none;">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold">Dog Breed Information</h2>
+                    <p class="text-muted">Search or filter breeds by size category.</p>
+                </div>
+
+                <!-- Search & Filter Bar -->
+                <div class="card p-3 mb-4 shadow-sm border">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                                <input type="text" id="searchInput" onkeyup="filterBreeds()" placeholder="Search dog breed by name or trait..." class="form-control border-start-0 bg-light">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex gap-2 justify-content-md-end overflow-auto pb-1" id="pillContainer">
+                                <button onclick="setFilter('All')" class="btn btn-dark btn-sm rounded-pill px-3 active">All</button>
+                                <button onclick="setFilter('Small')" class="btn btn-outline-dark btn-sm rounded-pill px-3">Small</button>
+                                <button onclick="setFilter('Medium')" class="btn btn-outline-dark btn-sm rounded-pill px-3">Medium</button>
+                                <button onclick="setFilter('Large')" class="btn btn-outline-dark btn-sm rounded-pill px-3">Large</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4" id="breedsGrid"></div>
+                <div id="noResults" class="text-center py-5 text-muted" style="display: none;">
+                    <p>No dog breeds matched your search criteria.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: ABOUT US (WITH SLIDESHOW) -->
+        <section id="page-about" class="py-5" style="display: none;">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold">About PawPedia</h2>
+                    <p class="text-muted">Dedicated to dog lovers everywhere with reliable insights and care guides.</p>
+                </div>
+
+                <!-- BOOTSTRAP SLIDESHOW / CAROUSEL -->
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-10">
+                        <div id="aboutCarousel" class="carousel slide shadow-lg rounded-4 overflow-hidden" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#aboutCarousel" data-bs-slide-to="0" class="active"></button>
+                                <button type="button" data-bs-target="#aboutCarousel" data-bs-slide-to="1"></button>
+                                <button type="button" data-bs-target="#aboutCarousel" data-bs-slide-to="2"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" data-bs-interval="4000">
+                                    <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" alt="Dog Shelter & Care">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>Dedicated Pet Care Advocates</h5>
+                                        <p>Providing trusted resources for responsible pet ownership worldwide.</p>
+                                    </div>
+                                </div>
+                                <div class="carousel-item" data-bs-interval="4000">
+                                    <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" alt="Happy Dogs">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>Happy & Healthy Canines</h5>
+                                        <p>Helping pets and families thrive through education and community support.</p>
+                                    </div>
+                                </div>
+                                <div class="carousel-item" data-bs-interval="4000">
+                                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" alt="Dog Training">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>Expert Training & Guidance</h5>
+                                        <p>Connecting owners with professional trainers and veterinary resources.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#aboutCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 text-center">
+                    <div class="col-md-4">
+                        <div class="p-4 bg-white rounded-4 border h-100">
+                            <i class="fa-solid fa-heart text-warning fs-1 mb-3"></i>
+                            <h4 class="fw-bold fs-5">Unconditional Love</h4>
+                            <p class="text-muted small mb-0">We celebrate the deep bond between humans and their canine companions.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4 bg-white rounded-4 border h-100">
+                            <i class="fa-solid fa-shield-dog text-warning fs-1 mb-3"></i>
+                            <h4 class="fw-bold fs-5">Reliable Guidance</h4>
+                            <p class="text-muted small mb-0">Fact-checked breed profiles and health tips you can trust.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4 bg-white rounded-4 border h-100">
+                            <i class="fa-solid fa-users text-warning fs-1 mb-3"></i>
+                            <h4 class="fw-bold fs-5">Community First</h4>
+                            <p class="text-muted small mb-0">Supporting pet parents with active customer support and expert advice.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 4: CONTACT -->
+        <section id="page-contact" class="py-5" style="display: none;">
+            <div class="container" style="max-width: 900px;">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold">Get in Touch</h2>
+                    <p class="text-muted">Have questions about dog breeds or suggestions? Send us a message below.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <div class="bg-white p-4 rounded-4 border h-100 shadow-sm">
+                            <h4 class="fw-bold mb-4">Contact Info</h4>
+                            <p class="text-muted mb-3"><i class="fa-solid fa-location-dot text-warning me-2"></i> Phnom Penh, Cambodia</p>
+                            <p class="text-muted mb-3"><i class="fa-solid fa-phone text-warning me-2"></i> +855 12 345 678</p>
+                            <p class="text-muted mb-4"><i class="fa-solid fa-envelope text-warning me-2"></i> support@pawpedia.com</p>
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-light rounded-circle"><i class="fa-brands fa-facebook-f text-warning"></i></a>
+                                <a href="#" class="btn btn-light rounded-circle"><i class="fa-brands fa-telegram text-warning"></i></a>
+                                <a href="#" class="btn btn-light rounded-circle"><i class="fa-brands fa-instagram text-warning"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="bg-white p-4 rounded-4 border shadow-sm">
+                            <form onsubmit="handleFormSubmit(event)">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Your Name</label>
+                                    <input type="text" class="form-control" required placeholder="John Doe">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Your Email</label>
+                                    <input type="email" class="form-control" required placeholder="john@example.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold small">Message</label>
+                                    <textarea class="form-control" rows="4" required placeholder="How can we help you?"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary-custom w-100">Send Message</button>
+                            </form>
+                            <div id="formAlert" class="alert alert-success mt-3" style="display: none;">
+                                Thank you! Your message has been sent successfully.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BREED PROFILE MODAL -->
+    <div class="modal fade" id="profileModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="d-flex gap-3 align-items-center">
+                        <img id="modalImg" src="" alt="" class="rounded-3" style="width: 70px; height: 70px; object-fit: cover;">
+                        <div>
+                            <span id="modalSize" class="badge badge-custom mb-1">Size</span>
+                            <h3 id="modalName" class="fs-5 fw-bold mb-0">Breed Name</h3>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <div class="p-2 bg-light rounded-3 border">
+                            <span class="d-block text-muted" style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase;">Lifespan</span>
+                            <span id="modalLifespan" class="fw-bold small">10 - 12 Years</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 bg-light rounded-3 border">
+                            <span class="d-block text-muted" style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase;">Energy Level</span>
+                            <span id="modalEnergy" class="fw-bold small text-warning">High</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 bg-light rounded-3 border">
+                            <span class="d-block text-muted" style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase;">Grooming Needs</span>
+                            <span id="modalGrooming" class="fw-bold small">Moderate</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-2 bg-light rounded-3 border">
+                            <span class="d-block text-muted" style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase;">Good with Kids</span>
+                            <span id="modalKids" class="fw-bold small">Yes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p id="modalDesc" class="text-muted small mb-0">Description goes here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-0 small">&copy; 2026 PawPedia. All rights reserved. Built with Bootstrap 5 &amp; Khmer font support.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const dogBreeds = [
+            {
+                id: 1,
+                name: "Golden Retriever",
+                size: "Large",
+                lifespan: "10 - 12 Years",
+                energy: "High",
+                grooming: "Moderate",
+                kids: "Excellent",
+                image: "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=600&q=80",
+                description: "Intelligent, friendly, and devoted. Golden Retrievers are playful and patient family pets that get along wonderfully with children and other animals."
+            },
+            {
+                id: 2,
+                name: "French Bulldog",
+                size: "Small",
+                lifespan: "10 - 14 Years",
+                energy: "Low",
+                grooming: "Low",
+                kids: "Great",
+                image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=600&q=80",
+                description: "Adaptable, playful, and smart. French Bulldogs are charming companions suited wonderfully for city living and apartments."
+            },
+            {
+                id: 3,
+                name: "German Shepherd",
+                size: "Large",
+                lifespan: "7 - 10 Years",
+                energy: "Very High",
+                grooming: "High",
+                kids: "Good",
+                image: "https://images.unsplash.com/photo-1589941013453-ec89f33b5e95?auto=format&fit=crop&w=600&q=80",
+                description: "Courageous, confident, and smart. German Shepherds are exceptionally versatile working dogs and fiercely loyal protectors."
+            },
+            {
+                id: 4,
+                name: "Beagle",
+                size: "Medium",
+                lifespan: "12 - 15 Years",
+                energy: "High",
+                grooming: "Low",
+                kids: "Friendly",
+                image: "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=600&q=80",
+                description: "Curious, friendly, and merry hounds. Beagles love outdoor explorations and make delightful, happy-go-lucky family companions."
+            },
+            {
+                id: 5,
+                name: "Poodle (Miniature)",
+                size: "Small",
+                lifespan: "10 - 18 Years",
+                energy: "High",
+                grooming: "High",
+                kids: "Friendly",
+                image: "https://images.unsplash.com/photo-1561948955-570b270e7c36?auto=format&fit=crop&w=600&q=80",
+                description: "Exceptionally smart, active, and agile. Miniature Poodles excel in obedience training and sport low-allergen coats."
+            },
+            {
+                id: 6,
+                name: "Siberian Husky",
+                size: "Large",
+                lifespan: "12 - 14 Years",
+                energy: "Very High",
+                grooming: "High",
+                kids: "Friendly",
+                image: "https://images.unsplash.com/photo-1605568427561-40dd23c2acea?auto=format&fit=crop&w=600&q=80",
+                description: "Outgoing, mischievous, and loyal. Huskies are athletic sled dogs known for their striking blue eyes and enduring stamina."
+            }
+        ];
+
+        let currentFilter = 'All';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFeaturedBreeds();
+            renderBreeds(dogBreeds);
+        });
+
+        // Section Switcher Function
+        function showSection(sectionId) {
+            const sections = ['home', 'breeds', 'about', 'contact'];
+            sections.forEach(s => {
+                const el = document.getElementById('page-' + s);
+                if (el) el.style.display = (s === sectionId) ? 'block' : 'none';
+            });
+
+            document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + sectionId) {
+                    link.classList.add('active');
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderFeaturedBreeds() {
+            const grid = document.getElementById('featuredGrid');
+            const featured = dogBreeds.slice(0, 3);
+            grid.innerHTML = featured.map(breed => createCardHTML(breed)).join('');
+        }
+
+        function renderBreeds(breedsToRender) {
+            const grid = document.getElementById('breedsGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (breedsToRender.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+                grid.innerHTML = breedsToRender.map(breed => createCardHTML(breed)).join('');
+            }
+        }
+
+        function createCardHTML(breed) {
+            return `
+                <div class="col-md-4">
+                    <div class="custom-card h-100 d-flex flex-column justify-content-between">
+                        <div class="card-img-wrapper">
+                            <span class="badge badge-custom position-absolute top-0 start-0 m-3 shadow-sm">${breed.size}</span>
+                            <img src="${breed.image}" alt="${breed.name}">
+                        </div>
+                        <div class="card-body p-4">
+                            <h4 class="fs-5 fw-bold mb-2">${breed.name}</h4>
+                            <div class="d-flex gap-2 mb-3">
+                                <span class="badge bg-light text-dark border"><i class="fa-solid fa-bolt text-warning"></i> ${breed.energy}</span>
+                                <span class="badge bg-light text-dark border"><i class="fa-solid fa-heart text-danger"></i> ${breed.kids}</span>
+                            </div>
+                            <p class="text-muted small mb-0" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${breed.description}</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                            <button onclick="openModal(${breed.id})" class="btn btn-outline-warning btn-sm w-100 fw-bold py-2">View Profile</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function setFilter(size) {
+            currentFilter = size;
+            document.querySelectorAll('#pillContainer .btn').forEach(btn => {
+                btn.classList.remove('active', 'btn-dark');
+                btn.classList.add('btn-outline-dark');
+                if (btn.textContent.trim() === size) {
+                    btn.classList.add('active', 'btn-dark');
+                    btn.classList.remove('btn-outline-dark');
+                }
+            });
+            filterBreeds();
+        }
+
+        function filterBreeds() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = dogBreeds.filter(breed => {
+                const matchesSize = (currentFilter === 'All' || breed.size === currentFilter);
+                const matchesSearch = breed.name.toLowerCase().includes(query) || breed.description.toLowerCase().includes(query);
+                return matchesSize && matchesSearch;
+            });
+            renderBreeds(filtered);
+        }
+
+        function openModal(breedId) {
+            const breed = dogBreeds.find(b => b.id === breedId);
+            if (!breed) return;
+
+            document.getElementById('modalImg').src = breed.image;
+            document.getElementById('modalSize').textContent = breed.size + ' Breed';
+            document.getElementById('modalName').textContent = breed.name;
+            document.getElementById('modalLifespan').textContent = breed.lifespan;
+            document.getElementById('modalEnergy').textContent = breed.energy;
+            document.getElementById('modalGrooming').textContent = breed.grooming;
+            document.getElementById('modalKids').textContent = breed.kids;
+            document.getElementById('modalDesc').textContent = breed.description;
+
+            const modal = new bootstrap.Modal(document.getElementById('profileModal'));
+            modal.show();
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const alertBox = document.getElementById('formAlert');
+            alertBox.style.display = 'block';
+            event.target.reset();
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
